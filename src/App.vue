@@ -12,9 +12,9 @@
 <script>
 import navbar from "@/components/navbar.vue";
 import footervue from "@/components/Footer.vue";
+import {EventBus} from './share-data/userstate.js';
 export default {
   name: "App",
-
   components: {
     navbar,
     footervue
@@ -24,5 +24,16 @@ export default {
   data: () => ({
    login:false
   }),
+  methods:{
+
+  },
+   mounted() {  
+    if( sessionStorage.getItem('token')){
+      this.login=true;
+    }
+     EventBus.$on("loginEvent",dt=>{
+       this.login=dt;
+     })
+   }
 };
 </script>

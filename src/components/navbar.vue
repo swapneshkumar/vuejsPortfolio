@@ -50,7 +50,7 @@ import UserProfile from "../components/Userprofile.vue";
         interval:{},
         value:0,
         links:[
-          {icons:'dashboard',text:'dashboard',route:'/'},
+          {icons:'dashboard',text:'dashboard',route:'/dashbord'},
           {icons:'folder',text:'my project',route:'/projects'},
           {icons:'person',text:'Team',route:'/teams'}
         ]

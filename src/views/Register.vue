@@ -84,6 +84,7 @@
 </template>
 
 <script>
+import Axios from "axios";
 export default {
   name: "Register",
   data() {
@@ -99,41 +100,57 @@ export default {
       loginPassword: "",
       loginEmail: "",
       loginEmailRules: [
-        v => !!v || "Required",
-        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+        (v) => !!v || "Required",
+        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
       ],
       emailRules: [
-        v => !!v || "Required",
-        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+        (v) => !!v || "Required",
+        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
       ],
 
       show1: false,
       rules: {
-        required: value => !!value || "Required.",
-        min: v => (v && v.length >= 8) || "Min 8 characters"
-      }
+        required: (value) => !!value || "Required.",
+        min: (v) => (v && v.length >= 8) || "Min 8 characters",
+      },
     };
   },
   methods: {
     login() {
-   this.$router.push('/');
+      this.$router.push("/");
     },
     validate() {
-      if (this.$refs.loginForm.validate()) {
-        // submit form to server/API here...
-      }
+      const obj = {
+        userId: this.email,
+        password: this.password,
+        firstName: this.firstName,
+        lastName: this.lastName,
+      };
+      Axios.post("http://localhost:8082/api/register", obj).then(
+        () => {
+          this.$router.push("/");
+        },
+        (error, msg) => {
+          console.log(error, msg);
+        }
+      );
+      //if (this.$refs.loginForm.validate()) {
+
+      // submit form to server/API here...
+      //alert(this.email)
+      //}
     },
     reset() {
       this.$refs.form.reset();
     },
     resetValidation() {
       this.$refs.form.resetValidation();
-    }
+    },
   },
   computed: {
     passwordMatch() {
       return () => this.password === this.verify || "Password must match";
-    }
-  }
+    },
+  },
 };
 </script>

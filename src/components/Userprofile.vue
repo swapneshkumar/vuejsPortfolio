@@ -8,6 +8,7 @@
       <v-menu offset-y col>
         <template v-slot:activator="{ on, attrs }">
             <p  dark v-bind="attrs" v-on="on" class="white--text subheading mt-1 text-center">UserName</p>
+            <v-btn color="dangar" @click="logout">Log Out</v-btn>
           <!-- <v-link dark v-bind="attrs" v-on="on" class="white--text subheading mt-1 text-center">Dropdown</v-link> -->
         </template>
        <v-list nav>
@@ -32,6 +33,7 @@
 </template>
 
 <script>
+import {EventBus} from '../share-data/userstate.js'
 export default {
      data: () => ({
       items: [
@@ -43,5 +45,13 @@ export default {
           {icons:'folder',text:'Account settings',route:'/accountSetting'},
         ]
     }),
+    methods:{
+      logout(){
+        sessionStorage.removeItem('token');
+        this.$router.push("/");
+         EventBus.$emit("loginEvent",false);
+
+      }
+    }
 }
 </script>
